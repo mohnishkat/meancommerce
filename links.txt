@@ -1,0 +1,19 @@
+https://thecodebarbarian.wordpress.com/2013/07/22/introduction-to-the-mean-stack-part-one-setting-up-your-tools/
+
+npm install -gd express-generator
+
+http://www.jhh.me/blog/2012/12/24/setting-up-http-server-on-windows-with-node-js/
+
+First you must install NodeJS.
+Open the command prompt to run following commands.
+Windows 7: Open Start and write cmd into the search and press enter.
+Windows XP: Open Start and select Run and write cmd and press enter.
+Run this command to install a HTTP server: npm install http-server -g
+And start the HTTP server: http-server /path/to/docroot with a path to the folder you want to share. Your folder must have some files before it works.
+Now just open http://localhost:8080/ in your browser.
+
+https://thinkster.io/mean-stack-tutorial/
+
+http://howtonode.org/express-mongodb
+
+http://stackoverflow.com/questions/2353818/how-do-i-get-started-with-node-js
