@@ -1,0 +1,15 @@
+{
+  "name": "meancommerce",
+  "version": "0.0.1",
+  "description": "Shopping package for mean stack",
+  "author": {
+    "name": "Meancommerce Team"
+  },
+  "mean": "0.4.3",
+  "engines": {
+    "node": "0.10.x",
+    "npm": "1.4.x"
+  },
+  "dependencies": {},
+  "license": "MIT"
+}

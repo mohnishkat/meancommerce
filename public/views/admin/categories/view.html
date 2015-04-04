@@ -1,0 +1,14 @@
+<section data-ng-controller="CategoriesController" data-ng-init="findOne()">
+  <h2>{{category.title}}</h2>
+  <div>{{category.content}}</div>
+  <span>{{category.created | date:'medium'}}</span> /
+  <span>{{category.user.name}}</span>
+  <div data-ng-if="hasAuthorization(category)">
+    <a class="btn" href="/#!/admin/categories/{{category._id}}/edit">
+      <i class="glyphicon glyphicon-edit"></i>
+    </a>
+    <a class="btn" data-ng-click="remove(category);">
+      <i class="glyphicon glyphicon-trash"></i>
+    </a>
+  </div>
+</section>

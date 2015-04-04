@@ -1,2 +1,1 @@
-# meancommerce
-Shopping site in mean stack
+README: meancommerce

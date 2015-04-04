@@ -1,0 +1,22 @@
+<section data-ng-controller="CategoriesController" data-ng-init="find()">
+  <h2 data-ng-show="categories.length"><a href="/#!/admin/categories/create">+ New category</a></h2>
+  <ul class="categories unstyled">
+    <li data-ng-repeat="category in categories">
+      <h2>
+        <a data-ng-href="#!/admin/categories/{{category._id}}">{{category.title}}</a>
+        <span data-ng-if="hasAuthorization(category)">
+          <a class="btn" href="/#!/admin/categories/{{category._id}}/edit">
+            <i class="glyphicon glyphicon-edit"></i>
+          </a>
+          <a class="btn" data-ng-click="remove(category);">
+            <i class="glyphicon glyphicon-trash"></i>
+          </a>
+        </span>
+      </h2>
+      <div>{{category.content}}</div>
+      <span>{{category.created | date:'medium'}}</span> /
+      <span>{{category.user.name}}</span>
+    </li>
+  </ul>
+  <h1 data-ng-hide="!categories || categories.length">No categories yet. <br> Why don't you <a href="/#!/admin/categories/create">Create One</a>?</h1>
+</section>
