@@ -28,13 +28,28 @@ exports.category = function(req, res, next, id) {
 exports.create = function(req, res) {
   var category = new Category(req.body);
   category.user = req.user;
-
   category.save(function(err) {
-    if (err) {
-      return res.status(500).json({
-        error: 'Cannot save the category'
-      });
+  if (err) {
+    switch (err.code) {
+      default:
+        var modelErrors = [];
+
+        if (err.errors) {
+
+          for (var x in err.errors) {
+            modelErrors.push({
+              param: x,
+              msg: err.errors[x].message,
+              value: err.errors[x].value
+            });
+          }
+
+          res.status(400).json(modelErrors);
+        }
     }
+
+    return res.status(400);
+  }
     res.json(category);
 
   });
@@ -49,11 +64,27 @@ exports.update = function(req, res) {
   category = _.extend(category, req.body);
 
   category.save(function(err) {
-    if (err) {
-      return res.status(500).json({
-        error: 'Cannot update the category'
-      });
+  if (err) {
+    switch (err.code) {
+      default:
+        var modelErrors = [];
+
+        if (err.errors) {
+
+          for (var x in err.errors) {
+            modelErrors.push({
+              param: x,
+              msg: err.errors[x].message,
+              value: err.errors[x].value
+            });
+          }
+
+          res.status(400).json(modelErrors);
+        }
     }
+
+    return res.status(400);
+  }
     res.json(category);
 
   });
@@ -84,16 +115,16 @@ exports.show = function(req, res) {
 };
 
 /**
- * List of Categorys
+ * List of Categories
  */
 exports.all = function(req, res) {
-  Category.find().sort('-created').populate('user', 'name username').exec(function(err, categorys) {
+  Category.find().sort('-created').populate('user', 'name username').exec(function(err, categories) {
     if (err) {
       return res.status(500).json({
-        error: 'Cannot list the categorys'
+        error: 'Cannot list the categories'
       });
     }
-    res.json(categorys);
+    res.json(categories);
 
   });
 };

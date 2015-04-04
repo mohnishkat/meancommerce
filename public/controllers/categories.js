@@ -12,14 +12,17 @@ angular.module('mean.meancommerce').controller('CategoriesController', ['$scope'
       if (isValid) {
         var category = new Categories({
           title: this.title,
+          slug: this.slug,
           content: this.content
         });
         category.$save(function(response) {
           $location.path('admin/categories/' + response._id);
+        }, function(error) {
+           $scope.categoryError = error.data;
         });
-
-        this.title = '';
+        /*this.title = '';
         this.content = '';
+        this.slug = '';*/
       } else {
         $scope.submitted = true;
       }
@@ -52,6 +55,8 @@ angular.module('mean.meancommerce').controller('CategoriesController', ['$scope'
 
         category.$update(function() {
           $location.path('admin/categories/' + category._id);
+        }, function(error) {
+           $scope.categoryError = error.data;
         });
       } else {
         $scope.submitted = true;
