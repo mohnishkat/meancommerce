@@ -23,7 +23,13 @@ Meancommerce.register(function(app, auth, database) {
     roles: ['admin'],
     menu: 'main'
   });
-  
+  Meancommerce.menus.add({
+    title: 'Products',
+    link: 'all products',
+    roles: ['admin'],
+    menu: 'main'
+  });
+
   Meancommerce.aggregateAsset('css', 'meancommerce.css');
 
   /**

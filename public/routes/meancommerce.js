@@ -2,13 +2,6 @@
 
 angular.module('mean.meancommerce').config(['$stateProvider',
   function($stateProvider) {
-    $stateProvider.state('meancommerce example page', {
-      url: '/meancommerce/example',
-      templateUrl: 'meancommerce/views/index.html',
-			resolve: {
-        loggedin: checkLoggedin
-			}
-    });
 
     // Check if the user is connected
     var checkLoggedin = function($q, $timeout, $http, $location) {
@@ -33,6 +26,13 @@ angular.module('mean.meancommerce').config(['$stateProvider',
 
     // states for my app
     $stateProvider
+       .state('meancommerce example page', {
+        url: '/meancommerce/example',
+        templateUrl: 'meancommerce/views/index.html',
+        resolve: {
+          loggedin: checkLoggedin
+        }
+       })
       .state('all categories', {
         url: '/admin/categories',
         templateUrl: 'meancommerce/views/admin/categories/list.html',
@@ -57,6 +57,34 @@ angular.module('mean.meancommerce').config(['$stateProvider',
       .state('category by id', {
         url: '/admin/categories/:categoryId',
         templateUrl: 'meancommerce/views/admin/categories/view.html',
+        resolve: {
+          loggedin: checkLoggedin
+        }
+      })
+      .state('all products', {
+        url: '/admin/products',
+        templateUrl: 'meancommerce/views/admin/products/list.html',
+        resolve: {
+          loggedin: checkLoggedin
+        }
+      })
+      .state('create product', {
+        url: '/admin/products/create',
+        templateUrl: 'meancommerce/views/admin/products/create.html',
+        resolve: {
+          loggedin: checkLoggedin
+        }
+      })
+      .state('edit product', {
+        url: '/admin/products/:productId/edit',
+        templateUrl: 'meancommerce/views/admin/products/edit.html',
+        resolve: {
+          loggedin: checkLoggedin
+        }
+      })
+      .state('product by id', {
+        url: '/admin/products/:productId',
+        templateUrl: 'meancommerce/views/admin/products/view.html',
         resolve: {
           loggedin: checkLoggedin
         }

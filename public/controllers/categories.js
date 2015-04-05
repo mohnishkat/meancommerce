@@ -11,7 +11,7 @@ angular.module('mean.meancommerce').controller('CategoriesController', ['$scope'
     $scope.create = function(isValid) {
       if (isValid) {
         var category = new Categories({
-          title: this.title,
+          name: this.name,
           slug: this.slug,
           content: this.content
         });

@@ -1,0 +1,22 @@
+<section data-ng-controller="ProductsController" data-ng-init="find()">
+  <h2 data-ng-show="products.length"><a href="/#!/admin/products/create">+ New product</a></h2>
+  <ul class="products unstyled">
+    <li data-ng-repeat="product in products">
+      <h2>
+        <a data-ng-href="#!/admin/products/{{product._id}}">{{product.name}}</a>
+        <span data-ng-if="hasAuthorization(product)">
+          <a class="btn" href="/#!/admin/products/{{product._id}}/edit">
+            <i class="glyphicon glyphicon-edit"></i>
+          </a>
+          <a class="btn" data-ng-click="remove(product);">
+            <i class="glyphicon glyphicon-trash"></i>
+          </a>
+        </span>
+      </h2>
+      <div>{{product.content}}</div>
+      <span>{{product.created | date:'medium'}}</span> /
+      <span>{{product.user.name}}</span>
+    </li>
+  </ul>
+  <h1 data-ng-hide="!products || products.length">No products yet. <br> Why don't you <a href="/#!/admin/products/create">Create One</a>?</h1>
+</section>

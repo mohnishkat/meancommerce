@@ -1,0 +1,16 @@
+<section data-ng-controller="ProductsController" data-ng-init="findOne()">
+  <h2>{{product.name}}</h2>
+  <div>SKU: {{product.sku}}</div>
+  <div>Price: {{product.price}}</div>
+  <div>{{product.content}}</div>
+  <span>{{product.created | date:'medium'}}</span> /
+  <span>{{product.user.name}}</span>
+  <div data-ng-if="hasAuthorization(product)">
+    <a class="btn" href="/#!/admin/products/{{product._id}}/edit">
+      <i class="glyphicon glyphicon-edit"></i>
+    </a>
+    <a class="btn" data-ng-click="remove(product);">
+      <i class="glyphicon glyphicon-trash"></i>
+    </a>
+  </div>
+</section>

@@ -3,7 +3,7 @@
   <ul class="categories unstyled">
     <li data-ng-repeat="category in categories">
       <h2>
-        <a data-ng-href="#!/admin/categories/{{category._id}}">{{category.title}}</a>
+        <a data-ng-href="#!/admin/categories/{{category._id}}">{{category.name}}</a>
         <span data-ng-if="hasAuthorization(category)">
           <a class="btn" href="/#!/admin/categories/{{category._id}}/edit">
             <i class="glyphicon glyphicon-edit"></i>

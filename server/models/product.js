@@ -9,8 +9,8 @@ var mongoose = require('mongoose'),
           _   = require('lodash');
 
 var validateUniqueSlug = function(value, callback) {
-  var Category = mongoose.model('Category');
-  Category.find({
+  var Product = mongoose.model('Product');
+  Product.find({
     $and: [{
       slug: value
     }, {
@@ -18,15 +18,15 @@ var validateUniqueSlug = function(value, callback) {
         $ne: this._id
       }
     }]
-  }, function(err, category) {
-    callback(err || category.length === 0);
+  }, function(err, product) {
+    callback(err || product.length === 0);
   });
 };
 
 /**
- * Category Schema
+ * Product Schema
  */
-var CategorySchema = new Schema({
+var ProductSchema = new Schema({
   created: {
     type: Date,
     default: Date.now
@@ -41,12 +41,23 @@ var CategorySchema = new Schema({
     required: true,
     trim: true
   },
+  sku: {
+    type: String,
+    unique: true,
+    required: true,
+    match: [/^[a-zA-Z0-9_-]+$/, 'The SKU must contain only letters, numbers, and underscores.'],
+    validate: [validateUniqueSlug, 'SKU is already in-use']
+  },
   slug: {
     type: String,
     unique: true,
     required: true,
     match: [/^[a-zA-Z0-9_-]+$/, 'The Slug must contain only letters, numbers, and underscores.'],
     validate: [validateUniqueSlug, 'Slug is already in-use']
+  },
+  price: {
+    type: Number,
+    required: true
   },
   user: {
     type: Schema.ObjectId,
@@ -57,25 +68,25 @@ var CategorySchema = new Schema({
 /**
  * Validations
  */
-CategorySchema.path('name').validate(function(name) {
+ProductSchema.path('name').validate(function(name) {
   return !!name;
-}, 'Title cannot be blank');
+}, 'Name cannot be blank');
 
-CategorySchema.path('content').validate(function(content) {
+ProductSchema.path('content').validate(function(content) {
   return !!content;
 }, 'Content cannot be blank');
 
-CategorySchema.path('slug').validate(function(slug) {
+ProductSchema.path('slug').validate(function(slug) {
   return !!slug;
 }, 'Slug cannot be blank');
 
 /**
  * Statics
  */
-CategorySchema.statics.load = function(id, cb) {
+ProductSchema.statics.load = function(id, cb) {
   this.findOne({
     _id: id
   }).populate('user', 'name username').exec(cb);
 };
 
-mongoose.model('Category', CategorySchema);
+mongoose.model('Product', ProductSchema);

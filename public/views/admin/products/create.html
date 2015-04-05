@@ -1,0 +1,57 @@
+<section data-ng-controller="ProductsController">
+  <div ng-repeat="error in productError">
+    <div class="alert alert-danger animated fadeIn">{{error.msg}}</div>
+  </div>
+  <form name="ProductForm" class="form-horizontal col-md-6" role="form" data-ng-submit="create(ProductForm.$valid)" novalidate>
+    <div class="form-group" ng-class="{ 'has-error' : submitted && ProductForm.name.$invalid }">
+      <label mean-token="'create-name'" class="col-md-3 control-label">Product name</label>
+      <div class="col-md-9">
+        <input name="name" type="text" class="form-control" data-ng-model="name" id="name" placeholder="Name" required>
+        <div ng-show="submitted && ProductForm.name.$invalid" class="help-block">
+          <p ng-show="ProductForm.name.$error.required">Product name is required</p>
+        </div>
+      </div>
+    </div>
+    <div class="form-group" ng-class="{ 'has-error' : submitted && ProductForm.sku.$invalid }">
+      <label mean-token="'create-sku'" class="col-md-3 control-label">SKU</label>
+      <div class="col-md-9">
+        <input name="sku" type="text" class="form-control" data-ng-model="sku" id="sku" placeholder="SKU" required>
+        <div ng-show="submitted && ProductForm.sku.$invalid" class="help-block">
+          <p ng-show="ProductForm.sku.$error.required">Sku is required</p>
+        </div>
+      </div>
+    </div>
+    <div class="form-group" ng-class="{ 'has-error' : submitted && ProductForm.price.$invalid }">
+      <label mean-token="'create-price'" class="col-md-3 control-label">Price</label>
+      <div class="col-md-9">
+        <input name="price" type="text" class="form-control" data-ng-model="price" id="price" placeholder="Price" required>
+        <div ng-show="submitted && ProductForm.price.$invalid" class="help-block">
+          <p ng-show="ProductForm.price.$error.required">Price is required</p>
+        </div>
+      </div>
+    </div>
+    <div class="form-group" ng-class="{ 'has-error' : submitted && ProductForm.slug.$invalid }">
+      <label mean-token="'create-slug'" class="col-md-3 control-label">Slug</label>
+      <div class="col-md-9">
+        <input name="slug" type="text" class="form-control" data-ng-model="slug" id="slug" placeholder="Slug" required>
+        <div ng-show="submitted && ProductForm.slug.$invalid" class="help-block">
+          <p ng-show="ProductForm.slug.$error.required">Slug is required</p>
+        </div>
+      </div>
+    </div>
+    <div class="form-group" ng-class="{ 'has-error' : submitted && ProductForm.content.$invalid }">
+      <label mean-token="'create-content'" for="content" class="col-md-3 control-label">Product Description</label>
+      <div class="col-md-9">
+        <textarea name="content" data-ng-model="content" id="content" cols="30" rows="3" placeholder="Content" class="form-control" required></textarea>
+        <div ng-show="submitted && ProductForm.content.$invalid" class="help-block">
+          <p ng-show="ProductForm.content.$error.required">Product Description is required</p>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-md-offset-3 col-md-9">
+        <button mean-token="'create-submit'" type="submit" class="btn btn-info">Submit</button>
+      </div>
+    </div>
+  </form>
+</section>
