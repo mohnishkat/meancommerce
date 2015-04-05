@@ -118,7 +118,7 @@ exports.show = function(req, res) {
  * List of Categories
  */
 exports.all = function(req, res) {
-  Product.find().sort('-created').populate('user', 'name username').exec(function(err, products) {
+  Product.find().sort('-created').populate('user', 'name username').populate('category', 'name').exec(function(err, products) {
     if (err) {
       return res.status(500).json({
         error: 'Cannot list the products'

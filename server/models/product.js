@@ -59,6 +59,10 @@ var ProductSchema = new Schema({
     type: Number,
     required: true
   },
+  category: {
+    type: Schema.ObjectId,
+    ref: 'Category'
+  },
   user: {
     type: Schema.ObjectId,
     ref: 'User'
@@ -86,7 +90,10 @@ ProductSchema.path('slug').validate(function(slug) {
 ProductSchema.statics.load = function(id, cb) {
   this.findOne({
     _id: id
-  }).populate('user', 'name username').exec(cb);
+  })
+  .populate('user', 'name username')
+  .populate('category', 'name')
+  .exec(cb);
 };
 
 mongoose.model('Product', ProductSchema);

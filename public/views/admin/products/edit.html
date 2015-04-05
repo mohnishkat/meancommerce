@@ -12,21 +12,22 @@
         </div>
       </div>
     </div>
-    <div class="form-group" ng-class="{ 'has-error' : submitted && ProductForm.sku.$invalid }">
+    <div class="form-group" ng-class="{ 'has-error' : submitted && productForm.sku.$invalid }">
       <label mean-token="'edit-sku'" for="sku" class="col-md-2 control-label">SKU</label>
       <div class="col-md-10">
         <input name="sku" type="text" class="form-control" data-ng-model="product.sku" id="sku" placeholder="SKU" required>
-        <div ng-show="submitted && ProductForm.sku.$invalid" class="help-block">
-          <p ng-show="ProductForm.sku.$error.required">Sku is required</p>
+        <div ng-show="submitted && productForm.sku.$invalid" class="help-block">
+          <p ng-show="productForm.sku.$error.required">Sku is required</p>
         </div>
       </div>
     </div>
-    <div class="form-group" ng-class="{ 'has-error' : submitted && ProductForm.price.$invalid }">
+    <div class="form-group" ng-class="{ 'has-error' : submitted && productForm.price.$invalid }">
       <label mean-token="'edit-price'" for="price" class="col-md-2 control-label">Price</label>
       <div class="col-md-10">
-        <input name="price" type="text" class="form-control" data-ng-model="product.price" id="price" placeholder="Price" required>
-        <div ng-show="submitted && ProductForm.price.$invalid" class="help-block">
-          <p ng-show="ProductForm.price.$error.required">Price is required</p>
+        <input name="price" type="number" class="form-control" data-ng-model="product.price" id="price" placeholder="Price" required>
+        <div ng-show="submitted && productForm.price.$invalid" class="help-block">
+          <p ng-show="productForm.price.$error.required">Price is required</p>
+          <p ng-show="productForm.price.$error.number">Not valid number!</p>
         </div>
       </div>
     </div>
@@ -46,6 +47,17 @@
         <textarea name="content" data-ng-model="product.content" id="content" cols="30" rows="3" placeholder="Content" class="form-control" required></textarea>
         <div ng-show="submitted && productForm.content.$invalid" class="help-block">
           <p ng-show="productForm.content.$error.required">Product description is required</p>
+        </div>
+      </div>
+    </div>
+    <div class="form-group" ng-class="{ 'has-error' : submitted && productForm.category.$invalid }">
+      <label mean-token="'edit-category'" for="category" class="col-md-2 control-label">Product category</label>
+      <div class="col-md-10">
+        <select data-ng-model="product.category" name="category" class="form-control" id="category" required data-ng-options="cat.name for cat in categories track by cat._id" ng-selected="product.category._id">
+          <option value="">-- choose category --</option>
+        </select>
+        <div ng-show="submitted && productForm.category.$invalid" class="help-block">
+          <p ng-show="productForm.category.$error.required">Product category is required</p>
         </div>
       </div>
     </div>

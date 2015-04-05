@@ -32,30 +32,4 @@ module.exports = function(Meancommerce, app, auth, database) {
       res.send(html);
     });
   });
-
-  var categories = require('../controllers/categories');
-  app.route('/admin/categories')
-    .get(auth.requiresAdmin, categories.all)
-    .post(auth.requiresAdmin, categories.create);
-  app.route('/admin/categories/:categoryId')
-    .get(auth.requiresAdmin, categories.show)
-    .put(auth.requiresAdmin, auth.requiresAdmin, hasAuthorization, categories.update)
-    .delete(auth.requiresAdmin, hasAuthorization, categories.destroy);
-
-  // Finish with setting up the categoryId param
-  app.param('categoryId', categories.category);
-
-
-  var products = require('../controllers/products');
-  app.route('/admin/products')
-    .get(auth.requiresAdmin, products.all)
-    .post(auth.requiresAdmin, products.create);
-  app.route('/admin/products/:productId')
-    .get(auth.requiresAdmin, products.show)
-    .put(auth.requiresAdmin, auth.requiresAdmin, hasAuthorization, products.update)
-    .delete(auth.requiresAdmin, hasAuthorization, products.destroy);
-
-  // Finish with setting up the categoryId param
-  app.param('productId', products.product);
-
 };

@@ -15,7 +15,8 @@ angular.module('mean.meancommerce').controller('ProductsController', ['$scope', 
           slug: this.slug,
           content: this.content,
           sku: this.sku,
-          price: this.price
+          price: this.price,
+          category: this.category
         });
         product.$save(function(response) {
           $location.path('admin/products/' + response._id);

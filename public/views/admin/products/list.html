@@ -13,6 +13,7 @@
           </a>
         </span>
       </h2>
+      <div data-ng-if="product.category.name">Category: <a href="/#!/admin/categories/{{product.category._id}}">{{product.category.name}}</a></div>
       <div>{{product.content}}</div>
       <span>{{product.created | date:'medium'}}</span> /
       <span>{{product.user.name}}</span>
