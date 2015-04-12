@@ -1,23 +1,102 @@
 <section data-ng-controller="ProductsController" data-ng-init="find()">
-  <h2 data-ng-show="products.length"><a href="/#!/admin/products/create">+ New product</a></h2>
-  <ul class="products unstyled">
-    <li data-ng-repeat="product in products">
-      <h2>
-        <a data-ng-href="#!/admin/products/{{product._id}}">{{product.name}}</a>
-        <span data-ng-if="hasAuthorization(product)">
-          <a class="btn" href="/#!/admin/products/{{product._id}}/edit">
-            <i class="glyphicon glyphicon-edit"></i>
-          </a>
-          <a class="btn" data-ng-click="remove(product);">
-            <i class="glyphicon glyphicon-trash"></i>
-          </a>
-        </span>
-      </h2>
-      <div data-ng-if="product.category.name">Category: <a href="/#!/admin/categories/{{product.category._id}}">{{product.category.name}}</a></div>
-      <div>{{product.content}}</div>
-      <span>{{product.created | date:'medium'}}</span> /
-      <span>{{product.user.name}}</span>
-    </li>
-  </ul>
-  <h1 data-ng-hide="!products || products.length">No products yet. <br> Why don't you <a href="/#!/admin/products/create">Create One</a>?</h1>
+  <div id="list">
+    <h2 data-ng-show="products.length"><a href="/#!/admin/products/create">+ New product</a></h2>
+    <ul class="products unstyled">
+      <li data-ng-repeat="product in products">
+        <h2>
+          <a data-ng-href="#!/admin/products/{{product._id}}">{{product.name}}</a>
+          <span data-ng-if="hasAuthorization(product)">
+            <!--a class="btn" href="/#!/admin/products/{{product._id}}/edit">
+              <i class="glyphicon glyphicon-edit"></i>
+            </a -->
+            <a class="btn" data-ng-click="entityUpdate(false, product);">
+              <i class="glyphicon glyphicon-edit"></i>
+            </a>
+            <a class="btn" data-ng-click="remove(product);">
+              <i class="glyphicon glyphicon-trash"></i>
+            </a>
+          </span>
+        </h2>
+        <div data-ng-if="product.category.name">Category: <a href="/#!/admin/categories/{{product.category._id}}">{{product.category.name}}</a></div>
+        <div>{{product.content}}</div>
+        <span>{{product.created | date:'medium'}}</span> /
+        <span>{{product.user.name}}</span>
+      </li>
+    </ul>
+    <h1 data-ng-hide="!products || products.length">No products yet. <br> Why don't you <a href="/#!/admin/products/create">Create One</a>?</h1>
+  </div>
+  <div id="info">
+    <div class="view">
+      <section data-ng-show="entity_update">
+        <div ng-repeat="error in productError">
+          <div class="alert alert-danger animated fadeIn">{{error.msg}}</div>
+        </div>
+        <form name="productForm" class="form-horizontal col-md-12" role="form" data-ng-submit="entityUpdate(productForm.$valid)" novalidate>
+          <div class="form-group" ng-class="{ 'has-error' : submitted && productForm.name.$invalid }">
+            <label mean-token="'edit-name'" for="name" class="col-md-2 control-label">Product name</label>
+            <div class="col-md-10">
+              <input name="name" type="text" class="form-control" data-ng-model="product.name" id="name" placeholder="Name" required>
+              <div ng-show="submitted && productForm.name.$invalid" class="help-block">
+                <p ng-show="productForm.name.$error.required">Product name is required</p>
+              </div>
+            </div>
+          </div>
+          <div class="form-group" ng-class="{ 'has-error' : submitted && productForm.sku.$invalid }">
+            <label mean-token="'edit-sku'" for="sku" class="col-md-2 control-label">SKU</label>
+            <div class="col-md-10">
+              <input name="sku" type="text" class="form-control" data-ng-model="product.sku" id="sku" placeholder="SKU" required>
+              <div ng-show="submitted && productForm.sku.$invalid" class="help-block">
+                <p ng-show="productForm.sku.$error.required">Sku is required</p>
+              </div>
+            </div>
+          </div>
+          <div class="form-group" ng-class="{ 'has-error' : submitted && productForm.price.$invalid }">
+            <label mean-token="'edit-price'" for="price" class="col-md-2 control-label">Price</label>
+            <div class="col-md-10">
+              <input name="price" type="number" class="form-control" data-ng-model="product.price" id="price" placeholder="Price" required>
+              <div ng-show="submitted && productForm.price.$invalid" class="help-block">
+                <p ng-show="productForm.price.$error.required">Price is required</p>
+                <p ng-show="productForm.price.$error.number">Not valid number!</p>
+              </div>
+            </div>
+          </div>
+          <div class="form-group" ng-class="{ 'has-error' : submitted && productForm.slug.$invalid }">
+            <label mean-token="'edit-slug'" for="slug" class="col-md-2 control-label">Slug</label>
+            <div class="col-md-10">
+              <input name="slug" type="text" class="form-control" data-ng-model="product.slug" id="slug" placeholder="Slug" required>
+              <div ng-show="submitted && productForm.slug.$invalid" class="help-block">
+                <p ng-show="productForm.slug.$error.required">Slug is required</p>
+              </div>
+            </div>
+          </div>
+          <div class="form-group" ng-class="{ 'has-error' : submitted && productForm.content.$invalid }">
+            <label mean-token="'edit-content'" for="content" class="col-md-2 control-label">Product Description</label>
+            <div class="col-md-10">
+              <textarea name="content" data-ng-model="product.content" id="content" cols="30" rows="3" placeholder="Content" class="form-control" required></textarea>
+              <div ng-show="submitted && productForm.content.$invalid" class="help-block">
+                <p ng-show="productForm.content.$error.required">Product description is required</p>
+              </div>
+            </div>
+          </div>
+          <div class="form-group" ng-class="{ 'has-error' : submitted && productForm.category.$invalid }">
+            <label mean-token="'edit-category'" for="category" class="col-md-2 control-label">Product category</label>
+            <div class="col-md-10">
+              <select data-ng-model="product.category" name="category" class="form-control" id="category" required data-ng-options="cat.name for cat in categories track by cat._id" ng-selected="product.category._id">
+                <option value="">-- choose category --</option>
+              </select>
+              <div ng-show="submitted && productForm.category.$invalid" class="help-block">
+                <p ng-show="productForm.category.$error.required">Product category is required</p>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+              <button mean-token="'edit-submit'" type="submit" class="btn btn-default">Submit</button>
+              <button class="btn btn-default" data-ng-click="entityUpdateClose();">Close</button>
+            </div>
+          </div>
+        </form>
+      </section>
+    </div>
+  </div>
 </section>

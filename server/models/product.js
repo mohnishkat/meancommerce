@@ -23,6 +23,21 @@ var validateUniqueSlug = function(value, callback) {
   });
 };
 
+var validateUniqueSku = function(value, callback) {
+  var Product = mongoose.model('Product');
+  Product.find({
+    $and: [{
+      sku: value
+    }, {
+      _id: {
+        $ne: this._id
+      }
+    }]
+  }, function(err, product) {
+    callback(err || product.length === 0);
+  });
+};
+
 /**
  * Product Schema
  */
@@ -46,7 +61,7 @@ var ProductSchema = new Schema({
     unique: true,
     required: true,
     match: [/^[a-zA-Z0-9_-]+$/, 'The SKU must contain only letters, numbers, and underscores.'],
-    validate: [validateUniqueSlug, 'SKU is already in-use']
+    validate: [validateUniqueSku, 'SKU is already in-use']
   },
   slug: {
     type: String,

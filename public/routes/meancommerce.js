@@ -65,7 +65,13 @@ angular.module('mean.meancommerce').config(['$stateProvider',
         url: '/admin/products',
         templateUrl: 'meancommerce/views/admin/products/list.html',
         resolve: {
-          loggedin: checkLoggedin
+          loggedin: checkLoggedin,
+          categories: ["$http", function($http){
+                        return $http({url: "admin/categories"});
+              }]
+          },
+        controller: function($scope, categories){
+          $scope.categories = categories.data;
         }
       })
       .state('create product', {

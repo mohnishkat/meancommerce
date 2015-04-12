@@ -50,7 +50,7 @@ angular.module('mean.meancommerce').controller('CategoriesController', ['$scope'
         var category = $scope.category;
         if(!category.updated) {
           category.updated = [];
-	}
+        }
         category.updated.push(new Date().getTime());
 
         category.$update(function() {
@@ -75,6 +75,35 @@ angular.module('mean.meancommerce').controller('CategoriesController', ['$scope'
       }, function(category) {
         $scope.category = category;
       });
+    };
+
+    $scope.entityUpdate = function(isValid, category) {
+      if (category) {
+          $scope.entity_update = true;
+          $scope.category = category;
+      }
+      if (isValid) {
+        var category = $scope.category;
+        if(!category.updated) {
+          category.updated = [];
+        }
+        category.updated.push(new Date().getTime());
+
+        category.$update(function() {
+          $scope.categoryError = [{"param":"submit","msg":"Category has been updated"}];
+        }, function(error) {
+           $scope.categoryError = error.data;
+        });
+      } else {
+        $scope.submitted = true;
+      }
+    };
+
+    $scope.entityUpdateClose = function() {
+      $scope.entity_update = false;
+      $scope.category = '';
+
+      $scope.categoryError = '';
     };
   }
 ]);
