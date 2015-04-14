@@ -30,6 +30,12 @@ Meancommerce.register(function(app, auth, database) {
     menu: 'main'
   });
 
+	Meancommerce.menus.add({
+		title: 'Browse Categories',
+		link: 'list category',
+		menu: 'main'
+	});
+
   Meancommerce.aggregateAsset('css', 'meancommerce.css');
 
   /**

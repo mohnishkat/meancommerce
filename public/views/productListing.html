@@ -1,0 +1,25 @@
+<section data-ng-controller="CategoriesController" data-ng-init="find()">
+	<nav class="navbar navbar-default" role="navigation">
+	<div id="navbar-header">
+		<ul class="icon-bar">
+		  <li data-ng-repeat="category in categories">
+			<h2>
+			  <a data-ng-href="#!/categories/{{category._id}}">{{category.name}}</a>
+			</h2>
+		  </li>
+		</ul>
+	</div>
+	</nav>
+</section>
+<section data-ng-controller="ProductsController" data-ng-init="getProducts()">
+  <div id="grid">  
+    <div data-ng-repeat="product in products">
+        <h2>
+          <a data-ng-href="#!/products/{{product._id}}">{{product.name}}</a>          
+        </h2>
+		<span>{{product.content}}</span>
+		<span>${{product.price}}</span>
+    </div>
+  </div>
+</section>
+    

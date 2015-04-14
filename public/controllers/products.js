@@ -108,5 +108,13 @@ angular.module('mean.meancommerce').controller('ProductsController', ['$scope', 
 
       $scope.productError = '';
     };
+	
+	$scope.getProducts = function() {
+      Products.query({
+        category: $stateParams.categoryId
+      }, function(products) {
+        $scope.products = products;
+      });
+    };
   }
 ]);

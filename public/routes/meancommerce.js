@@ -106,7 +106,14 @@ angular.module('mean.meancommerce').config(['$stateProvider',
         resolve: {
           loggedin: checkLoggedin
         }
-      });
-
+      })
+	  .state('list category', {
+        url: '/categories',
+        templateUrl: 'meancommerce/views/categoryListing.html',
+      })
+	  .state('products by category', {
+        url: '/categories/:categoryId',
+        templateUrl: 'meancommerce/views/productListing.html',
+      })
   }
 ]);

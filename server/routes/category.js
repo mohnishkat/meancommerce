@@ -11,15 +11,17 @@ var hasAuthorization = function(req, res, next) {
 };
 
 module.exports = function(Meancommerce, app, auth, database) {
-
   var categories = require('../controllers/categories');
+
   app.route('/admin/categories')
     .get(auth.requiresAdmin, categories.all)
     .post(auth.requiresAdmin, categories.create);
   app.route('/admin/categories/:categoryId')
     .get(auth.requiresAdmin, categories.show)
     .put(auth.requiresAdmin, auth.requiresAdmin, hasAuthorization, categories.update)
-    .delete(auth.requiresAdmin, hasAuthorization, categories.destroy);
+    .delete(auth.requiresAdmin, hasAuthorization, categories.destroy);  
+  app.route('/categories')
+    .get(categories.category)
 
   // Finish with setting up the categoryId param
   app.param('categoryId', categories.category);

@@ -1,0 +1,9 @@
+<section data-ng-controller="CategoriesController" data-ng-init="find()">
+	<ul class="categories unstyled">
+      <li data-ng-repeat="category in categories">
+        <h2>
+          <a data-ng-href="#!/categories/{{category._id}}">{{category.name}}</a>
+        </h2>
+      </li>
+    </ul>
+</section>
