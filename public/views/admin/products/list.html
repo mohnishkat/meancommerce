@@ -1,10 +1,10 @@
 <section data-ng-controller="ProductsController" data-ng-init="find()">
   <div id="list">
-    <h2 data-ng-show="products.length"><a href="/#!/admin/products/create">+ New product</a></h2>
+    <button data-ng-show="products.length" class="btn btn-default" data-ng-click="entityCreate(false, true);">+ New product</button>
     <ul class="products unstyled">
       <li data-ng-repeat="product in products">
         <h2>
-          <a data-ng-href="#!/admin/products/{{product._id}}">{{product.name}}</a>
+          <a data-ng-href="#!/admin/products/{{product._id}}" data-ng-click="entityView($event, product);">{{product.name}}</a>
           <span data-ng-if="hasAuthorization(product)">
             <!--a class="btn" href="/#!/admin/products/{{product._id}}/edit">
               <i class="glyphicon glyphicon-edit"></i>
@@ -92,11 +92,91 @@
           <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
               <button mean-token="'edit-submit'" type="submit" class="btn btn-default">Submit</button>
-              <button class="btn btn-default" data-ng-click="entityUpdateClose();">Close</button>
+              <button class="btn btn-default" data-ng-click="entityUpdateClose($event);">Close</button>
             </div>
           </div>
         </form>
       </section>
+      <section data-ng-show="entity_view">
+          <h2>{{product.name}}</h2>
+          <div>SKU: {{product.sku}}</div>
+          <div>Price: {{product.price}}</div>
+          <div data-ng-if="product.category.name">Category: <a href="/#!/admin/categories/{{product.category._id}}">{{product.category.name}}</a></div>
+          <div>{{product.content}}</div>
+          <span>{{product.created | date:'medium'}}</span> /
+          <span>{{product.user.name}}</span>
+      </section>
+      <section data-ng-show="entity_create">
+        <div ng-repeat="error in productError">
+          <div class="alert alert-danger animated fadeIn">{{error.msg}}</div>
+        </div>
+        <form name="productCreateForm" class="form-horizontal col-md-12" role="form" data-ng-submit="entityCreate(productCreateForm.$valid)" novalidate>
+          <div class="form-group" ng-class="{ 'has-error' : submitted && productCreateForm.name.$invalid }">
+            <label mean-token="'create-name'" class="col-md-2 control-label">Product name</label>
+            <div class="col-md-10">
+              <input name="name" type="text" class="form-control" data-ng-model="name" id="name" placeholder="Name" required>
+              <div ng-show="submitted && productCreateForm.name.$invalid" class="help-block">
+                <p ng-show="productCreateForm.name.$error.required">Product name is required</p>
+              </div>
+            </div>
+          </div>
+          <div class="form-group" ng-class="{ 'has-error' : submitted && productCreateForm.sku.$invalid }">
+            <label mean-token="'create-sku'" class="col-md-2 control-label">SKU</label>
+            <div class="col-md-10">
+              <input name="sku" type="text" class="form-control" data-ng-model="sku" id="sku" placeholder="SKU" required>
+              <div ng-show="submitted && productCreateForm.sku.$invalid" class="help-block">
+                <p ng-show="productCreateForm.sku.$error.required">Sku is required</p>
+              </div>
+            </div>
+          </div>
+          <div class="form-group" ng-class="{ 'has-error' : submitted && productCreateForm.price.$invalid }">
+            <label mean-token="'create-price'" class="col-md-2 control-label">Price</label>
+            <div class="col-md-10">
+              <input name="price" type="number" class="form-control" data-ng-model="price" id="price" placeholder="Price" required>
+              <div ng-show="submitted && productCreateForm.price.$invalid" class="help-block">
+                <p ng-show="productCreateForm.price.$error.required">Price is required</p>
+                <p ng-show="productCreateForm.price.$error.number">Not valid number!</p>
+              </div>
+            </div>
+          </div>
+          <div class="form-group" ng-class="{ 'has-error' : submitted && productCreateForm.slug.$invalid }">
+            <label mean-token="'create-slug'" class="col-md-2 control-label">Slug</label>
+            <div class="col-md-10">
+              <input name="slug" type="text" class="form-control" data-ng-model="slug" id="slug" placeholder="Slug" required>
+              <div ng-show="submitted && productCreateForm.slug.$invalid" class="help-block">
+                <p ng-show="productCreateForm.slug.$error.required">Slug is required</p>
+              </div>
+            </div>
+          </div>
+          <div class="form-group" ng-class="{ 'has-error' : submitted && productCreateForm.content.$invalid }">
+            <label mean-token="'create-content'" for="content" class="col-md-2 control-label">Product Description</label>
+            <div class="col-md-10">
+              <textarea name="content" data-ng-model="content" id="content" cols="30" rows="3" placeholder="Content" class="form-control" required></textarea>
+              <div ng-show="submitted && productCreateForm.content.$invalid" class="help-block">
+                <p ng-show="productCreateForm.content.$error.required">Product Description is required</p>
+              </div>
+            </div>
+          </div>
+          <div class="form-group" ng-class="{ 'has-error' : submitted && productCreateForm.category.$invalid }" >
+            <label mean-token="'create-category'" for="category" class="col-md-2 control-label">Product category</label>
+            <div class="col-md-10">
+              <select name="category" class="form-control" data-ng-model="category" id="category" required>
+                <option value=''>Select category</option>
+                <option ng-repeat="category in categories" value="{{category._id}}">{{category.name}}</option>
+              </select>
+              <div ng-show="submitted && productCreateForm.category.$invalid" class="help-block">
+                <p ng-show="productCreateForm.category.$error.required">Product category is required</p>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+              <button mean-token="'create-submit'" type="submit" class="btn btn-info">Submit</button>
+              <button class="btn btn-default" data-ng-click="entityCreateClose($event);">Close</button>
+            </div>
+          </div>
+        </form>
+    </section>
     </div>
   </div>
 </section>

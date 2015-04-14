@@ -32,6 +32,8 @@ angular.module('mean.meancommerce').controller('ProductsController', ['$scope', 
     };
 
     $scope.remove = function(product) {
+      $scope.entity_update = false;
+      $scope.entityClose();
       if (product) {
         product.$remove(function(response) {
           for (var i in $scope.products) {
@@ -80,10 +82,56 @@ angular.module('mean.meancommerce').controller('ProductsController', ['$scope', 
       });
     };
 
+    $scope.entityView = function($event, product) {
+      $event.preventDefault();
+      $scope.entityClose();
+      if (product) {
+          $scope.entity_view = true;
+          $scope.product = product;
+      }
+    };
+
+    $scope.entityCreate = function(isValid, first) {
+      $scope.entityClose();
+      $scope.entity_create = true;
+      if (isValid) {
+        var product = new Products({
+          name: this.name,
+          slug: this.slug,
+          content: this.content,
+          sku: this.sku,
+          price: this.price,
+          category: this.category
+        });
+        product.$save(function(response) {
+          //$location.path('admin/products/' + response._id);
+          //console.log(response);
+          Products.get({
+            productId: response._id
+          }, function(product) {
+            $scope.products.unshift(product);
+          });
+          $scope.entity_create = false;
+        }, function(error) {
+           $scope.productError = error.data;
+        });
+        /*this.title = '';
+        this.content = '';
+        this.slug = '';*/
+      } else {
+        $scope.submitted = true;
+      }
+      if(first){
+        $scope.submitted = false;
+      }
+    };
+
     $scope.entityUpdate = function(isValid, product) {
       if (product) {
+          $scope.entityClose();
           $scope.entity_update = true;
           $scope.product = product;
+          $scope.cproduct = angular.copy($scope.product);
       }
       if (isValid) {
         var product = $scope.product;
@@ -102,11 +150,33 @@ angular.module('mean.meancommerce').controller('ProductsController', ['$scope', 
       }
     };
 
-    $scope.entityUpdateClose = function() {
-      $scope.entity_update = false;
-      $scope.product = '';
+    $scope.entityCreateClose = function($event) {
+        $event.preventDefault();
+        $scope.entityClose();
+    };
 
-      $scope.productError = '';
+    $scope.entityUpdateClose = function($event) {
+        $event.preventDefault();
+        $scope.entityClose();
+    };
+
+    $scope.entityClose = function() {
+      if($scope.entity_update){
+        angular.forEach($scope.products, function(value, key) {
+          //console.log($scope.cproduct);
+          if(value._id == $scope.cproduct._id){
+            $scope.products[key] = $scope.cproduct;
+          }
+        });
+        $scope.productError = '';
+        $scope.entity_update = false;
+      }
+      if($scope.entity_view){
+        $scope.entity_view = false;
+      }
+      if($scope.entity_create){
+        $scope.entity_create = false;
+      }
     };
   }
 ]);
