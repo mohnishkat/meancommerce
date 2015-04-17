@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('mean.meancommerce').controller('ProductsController', ['$scope', '$stateParams', '$location', 'Global', 'Products',
-  function($scope, $stateParams, $location, Global, Products) {
+angular.module('mean.meancommerce').controller('ProductsController', ['$scope', '$http', '$stateParams', '$location', 'Global', 'Products',
+  function($scope, $http, $stateParams, $location, Global, Products) {
     $scope.global = Global;
     $scope.hasAuthorization = function(product) {
       if (!product || !product.user) return false;
@@ -180,11 +180,10 @@ angular.module('mean.meancommerce').controller('ProductsController', ['$scope', 
     };
 	
 	$scope.getProducts = function() {
-      Products.query({
-        category: $stateParams.categoryId
-      }, function(products) {
-        $scope.products = products;
-      });
+      console.log($http);
+	  $http.get('/admin/category/products/'+$stateParams.categoryId).success(function(data) {
+		$scope.products = data;
+	 });
     };
   }
 ]);

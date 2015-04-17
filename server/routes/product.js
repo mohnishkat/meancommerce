@@ -20,7 +20,8 @@ module.exports = function(Meancommerce, app, auth, database) {
     .get(auth.requiresAdmin, products.show)
     .put(auth.requiresAdmin, auth.requiresAdmin, hasAuthorization, products.update)
     .delete(auth.requiresAdmin, hasAuthorization, products.destroy);
-
+  app.route('/admin/category/products/:categoryId')
+    .get(auth.requiresAdmin, products.productByCategory)
   // Finish with setting up the categoryId param
   app.param('productId', products.product);
 

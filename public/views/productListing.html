@@ -1,24 +1,21 @@
 <section data-ng-controller="CategoriesController" data-ng-init="find()">
-	<nav class="navbar navbar-default" role="navigation">
-	<div id="navbar-header">
-		<ul class="icon-bar">
-		  <li data-ng-repeat="category in categories">
-			<h2>
-			  <a data-ng-href="#!/categories/{{category._id}}">{{category.name}}</a>
-			</h2>
-		  </li>
+	<div class="collapse navbar-collapse navbar-ex1-collapse">
+		<ul class="nav navbar-nav">
+			<li class="active" data-ng-repeat="category in categories">
+				<a data-ng-href="#!/category/products/{{category._id}}">{{category.name}}</a>
+			</li>			
 		</ul>
 	</div>
-	</nav>
 </section>
 <section data-ng-controller="ProductsController" data-ng-init="getProducts()">
-  <div id="grid">  
-    <div data-ng-repeat="product in products">
-        <h2>
-          <a data-ng-href="#!/products/{{product._id}}">{{product.name}}</a>          
-        </h2>
-		<span>{{product.content}}</span>
-		<span>${{product.price}}</span>
+  <div>  
+    <div class="row">
+        <div class="col-md-4" data-ng-repeat="product in products">
+          <div><img src="/meancommerce/assets/img/prod.png"></div>
+		  <div><a data-ng-href="#!/products/{{product._id}}">{{product.name}}</a></div>
+		  <div>{{product.content}}</div>
+		  <div>${{product.price}}</div>
+        </div>		
     </div>
   </div>
 </section>
