@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('mean.meancommerce').controller('CategoriesController', ['$scope', '$stateParams', '$location', 'Global', 'Categories',
-  function($scope, $stateParams, $location, Global, Categories) {
+angular.module('mean.meancommerce').controller('CategoriesController', ['$scope', '$stateParams', '$location', '$modal', 'Global', 'Categories',
+  function($scope, $stateParams, $location, $modal, Global, Categories) {
     $scope.global = Global;
     $scope.hasAuthorization = function(category) {
       if (!category || !category.user) return false;
@@ -77,10 +77,54 @@ angular.module('mean.meancommerce').controller('CategoriesController', ['$scope'
       });
     };
 
+    $scope.entityCreate = function(isValid, first) {
+      if(first) {
+        var modalInstance = $modal.open({
+        templateUrl: 'meancommerce/views/admin/categories/entitycreate.html',
+        controller: 'ModalInstanceCtrl',
+        resolve: {
+          items: function () {
+            return 1;
+          }
+        }
+        });
+      }
+      if (isValid) {
+        var category = new Categories({
+          name: this.name,
+          slug: this.slug,
+          content: this.content
+        });
+        category.$save(function(response) {
+          Categories.get({
+            categoryId: response._id
+          }, function(category) {
+            //$scope.categories.unshift(category);
+          });
+          $scope.categoryError = [{"param":"submit","msg":"Category has been Created"}];
+        }, function(error) {
+           $scope.categoryError = error.data;
+        });
+        this.name = '';
+        this.content = '';
+        this.slug = '';
+      } else {
+        $scope.submitted = true;
+      }
+    };
+    
     $scope.entityUpdate = function(isValid, category) {
       if (category) {
-          $scope.entity_update = true;
-          $scope.category = category;
+        var modalInstance = $modal.open({
+          templateUrl: 'meancommerce/views/admin/categories/entityedit.html',
+          controller: 'ModalInstanceCtrl',
+          resolve: {
+            items: function () {
+              return category;
+            }
+          }
+        });
+        //$scope.category = category;
       }
       if (isValid) {
         var category = $scope.category;
@@ -105,5 +149,39 @@ angular.module('mean.meancommerce').controller('CategoriesController', ['$scope'
 
       $scope.categoryError = '';
     };
+    
+    $scope.entityFindOne = function(categoryId) {
+      Categories.get({
+        categoryId: categoryId
+      }, function(category) {
+        $scope.category = category;
+      });
+    };
+    
+    $scope.open = function ($event, category) {
+    $event.preventDefault();
+    var modalInstance = $modal.open({
+      templateUrl: 'meancommerce/views/admin/categories/entityview.html',
+      controller: 'ModalInstanceCtrl',
+      resolve: {
+        items: function () {
+          return category;
+        }
+      }
+    });
+  };
   }
-]);
+]).controller('ModalInstanceCtrl', function ($scope, $modalInstance, items) {
+
+  $scope.category = items;
+
+
+  $scope.ok = function () {
+    $modalInstance.close();
+  };
+
+  $scope.cancel = function ($event) {
+    $event.preventDefault();
+    $modalInstance.dismiss('cancel');
+  };
+});
