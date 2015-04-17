@@ -128,3 +128,18 @@ exports.all = function(req, res) {
 
   });
 };
+
+/**
+ * Find Products by CategoryId
+ */
+exports.productByCategory = function(req, res, id) {
+  Product.find({category: req.category}).exec(function(err, products) {
+    if (err) {
+      return res.status(500).json({
+        error: 'Cannot list the products'
+      });
+    }
+    res.json(products);
+
+  });
+};
