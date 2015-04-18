@@ -99,15 +99,15 @@ angular.module('mean.meancommerce').controller('CategoriesController', ['$scope'
           Categories.get({
             categoryId: response._id
           }, function(category) {
-            //$scope.categories.unshift(category);
+            angular.element(document.getElementById('entity-list')).scope().categories.unshift(category);
           });
           $scope.categoryError = [{"param":"submit","msg":"Category has been Created"}];
+          $scope.name = '';
+          $scope.content = '';
+          $scope.slug = '';
         }, function(error) {
            $scope.categoryError = error.data;
         });
-        this.name = '';
-        this.content = '';
-        this.slug = '';
       } else {
         $scope.submitted = true;
       }
@@ -124,7 +124,6 @@ angular.module('mean.meancommerce').controller('CategoriesController', ['$scope'
             }
           }
         });
-        //$scope.category = category;
       }
       if (isValid) {
         var category = $scope.category;
@@ -133,8 +132,14 @@ angular.module('mean.meancommerce').controller('CategoriesController', ['$scope'
         }
         category.updated.push(new Date().getTime());
 
-        category.$update(function() {
+        category.$update(function(response) {
           $scope.categoryError = [{"param":"submit","msg":"Category has been updated"}];
+          var categories = angular.element(document.getElementById('entity-list')).scope().categories;
+           angular.forEach(categories, function(value, key) {
+            if(value._id == response._id){
+              categories[key] = response;
+            }
+          });
         }, function(error) {
            $scope.categoryError = error.data;
         });
