@@ -121,7 +121,7 @@ angular.module('mean.meancommerce').config(['$stateProvider',
       })
 	  .state('products by category', {
         url: '/category/products/:categoryId',
-        templateUrl: 'meancommerce/views/productListing.html',
+        templateUrl: 'meancommerce/views/productListing.html'
       })
   }
 ]);

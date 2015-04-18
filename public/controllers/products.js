@@ -181,7 +181,7 @@ angular.module('mean.meancommerce').controller('ProductsController', ['$scope', 
 	
 	$scope.getProducts = function() {
       console.log($http);
-	  $http.get('/admin/category/products/'+$stateParams.categoryId).success(function(data) {
+	  $http.get('/category/products/'+$stateParams.categoryId).success(function(data) {
 		$scope.products = data;
 	 });
     };
