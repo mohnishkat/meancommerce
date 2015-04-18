@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('mean.meancommerce').controller('CategoriesController', ['$scope', '$stateParams', '$location', '$modal', 'Global', 'Categories',
-  function($scope, $stateParams, $location, $modal, Global, Categories) {
+angular.module('mean.meancommerce').controller('CategoriesController', ['$scope', '$http', '$stateParams', '$location', '$modal', 'Global', 'Categories',
+  function($scope, $http, $stateParams, $location, $modal, Global, Categories) {
     $scope.global = Global;
     $scope.hasAuthorization = function(category) {
       if (!category || !category.user) return false;
@@ -164,18 +164,24 @@ angular.module('mean.meancommerce').controller('CategoriesController', ['$scope'
     };
     
     $scope.open = function ($event, category) {
-    $event.preventDefault();
-    var modalInstance = $modal.open({
-      templateUrl: 'meancommerce/views/admin/categories/entityview.html',
-      controller: 'ModalInstanceCtrl',
-      resolve: {
-        items: function () {
-          return category;
+      $event.preventDefault();
+      var modalInstance = $modal.open({
+        templateUrl: 'meancommerce/views/admin/categories/entityview.html',
+        controller: 'ModalInstanceCtrl',
+        resolve: {
+          items: function () {
+            return category;
+          }
         }
-      }
-    });
-  };
-  }
+      });
+    };
+
+    $scope.entityFindAll = function() {
+      $http.get('/categories').success(function(data) {
+        $scope.categories = data;
+      });
+     };
+    }
 ]).controller('ModalInstanceCtrl', function ($scope, $modalInstance, items) {
 
   $scope.category = items;
