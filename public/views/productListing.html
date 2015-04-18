@@ -11,10 +11,13 @@
   <div data-ng-show="products.length">  
     <div class="row">
         <div class="col-md-4" data-ng-repeat="product in products">
+          <h3><a data-ng-href="#!/products/{{product._id}}">{{product.name}}</a></h3>
           <div><img src="/meancommerce/assets/img/prod.png"></div>
-		  <div><a data-ng-href="#!/products/{{product._id}}">{{product.name}}</a></div>
-		  <div>{{product.content}}</div>
-		  <div>${{product.price}}</div>
+          <div>{{product.content}}</div>
+          <div>${{product.price}}</div>
+          <a class="btn btn-sm btn-primary" ng-click="ngCart.addItem(id, name, price, q, data)">
+            <span class="ng-scope">Add To Cart</span>
+          </a>
         </div>		
     </div>
   </div>
