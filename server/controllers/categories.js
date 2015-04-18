@@ -128,3 +128,19 @@ exports.all = function(req, res) {
 
   });
 };
+
+/**
+ * List of Categories
+ */
+exports.list = function(req, res) {
+  Category.find().sort('-created').populate('user', 'name username').exec(function(err, categories) {
+    if (err) {
+      return res.status(500).json({
+        error: 'Cannot list the categories'
+      });
+    }
+    res.json(categories);
+
+  });
+};
+
