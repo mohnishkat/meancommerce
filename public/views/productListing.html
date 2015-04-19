@@ -1,17 +1,9 @@
-<section data-ng-controller="CategoriesController" data-ng-init="entityFindAll()">
-	<div class="collapse navbar-collapse navbar-ex1-collapse">
-		<ul class="nav navbar-nav">
-			<li class="active" data-ng-repeat="category in categories">
-				<a data-ng-href="#!/category/products/{{category._id}}">{{category.name}}</a>
-			</li>			
-		</ul>
-	</div>
-</section>
+<div ng-include src="'meancommerce/views/categoryListing.html'"></div>
 <section data-ng-controller="ProductsController" data-ng-init="getProducts()">
   <div data-ng-show="products.length">  
     <div class="row">
         <div class="col-md-4" data-ng-repeat="product in products">
-          <h3><a data-ng-href="#!/products/{{product._id}}">{{product.name}}</a></h3>
+          <h3><a data-ng-href="#!/product/{{product._id}}">{{product.name}}</a></h3>
           <div><img src="/meancommerce/assets/img/prod.png"></div>
           <div>{{product.content}}</div>
           <div>${{product.price}}</div>

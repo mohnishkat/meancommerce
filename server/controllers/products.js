@@ -143,3 +143,30 @@ exports.productByCategory = function(req, res, id) {
 
   });
 };
+
+/**
+ * cart management
+ */
+exports.userCart = function(req, res) {
+	if(typeof req.session.cart == "undefined"){
+		req.session.cart = {};
+	}
+
+	req.session.cart['prod_'+req.body.productInfo._id] = {
+		name:req.body.productInfo.name,
+		quanity:req.body.quantity
+	}
+
+	res.json(req.session.cart);
+};
+
+/**
+ * cart count
+ */
+exports.userCartCount = function(req, res) {
+	if(typeof req.session.cart != "undefined"){
+		res.json({length:Object.keys(req.session.cart).length});
+	}else{
+		res.json({length:0});
+	}
+};

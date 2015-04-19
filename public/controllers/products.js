@@ -8,6 +8,8 @@ angular.module('mean.meancommerce').controller('ProductsController', ['$scope', 
       return $scope.global.isAdmin || product.user._id === $scope.global.user._id;
     };
 
+	$scope.quantity=[1,2,3,4,5];
+
     $scope.create = function(isValid) {
       if (isValid) {
         var product = new Products({
@@ -183,6 +185,19 @@ angular.module('mean.meancommerce').controller('ProductsController', ['$scope', 
       console.log($http);
 	  $http.get('/category/products/'+$stateParams.categoryId).success(function(data) {
 		$scope.products = data;
+	 });
+    };
+
+	$scope.addToCart = function(product) {
+	  $http.post('/products/userCart',{productInfo:product,quantity:$scope.quantityValue}).success(function(data) {
+		$scope.products = data;
+	 });
+    };
+
+	$scope.getCartCount = function() {
+      console.log($http);
+	  $http.get('/products/userCartCount').success(function(data) {
+		$scope.cartCount = data.length;
 	 });
     };
   }

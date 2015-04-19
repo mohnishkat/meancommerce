@@ -115,5 +115,9 @@ angular.module('mean.meancommerce').config(['$stateProvider',
         url: '/category/products/:categoryId',
         templateUrl: 'meancommerce/views/productListing.html'
       })
+	  .state('spp page', {
+        url: '/product/:productId',
+        templateUrl: 'meancommerce/views/productView.html'
+      })
   }
 ]);

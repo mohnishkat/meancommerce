@@ -21,7 +21,11 @@ module.exports = function(Meancommerce, app, auth, database) {
     .put(auth.requiresAdmin, auth.requiresAdmin, hasAuthorization, products.update)
     .delete(auth.requiresAdmin, hasAuthorization, products.destroy);
   app.route('/category/products/:categoryId')
-    .get(products.productByCategory)
+    .get(products.productByCategory);
+  app.route('/products/userCart')
+    .post(products.userCart);
+  app.route('/products/userCartCount')
+    .get(products.userCartCount);
   // Finish with setting up the categoryId param
   app.param('productId', products.product);
 
