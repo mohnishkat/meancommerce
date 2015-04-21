@@ -188,6 +188,12 @@ angular.module('mean.meancommerce').controller('ProductsController', ['$scope', 
 	 });
     };
 
+  $scope.getProduct = function() {
+   $http.get('/product/'+$stateParams.productId).success(function(data) {
+		$scope.product = data;
+	 });
+  };
+
 	$scope.addToCart = function(product) {
 	  $http.post('/products/userCart',{productInfo:product,quantity:$scope.quantityValue}).success(function(data) {
 		$scope.products = data;
