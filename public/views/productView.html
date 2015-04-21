@@ -1,5 +1,5 @@
 <div ng-include src="'meancommerce/views/categoryListing.html'"></div>
-<section data-ng-controller="ProductsController" data-ng-init="getCartCount()">
+<section data-ng-controller="ProductsController" data-ng-init="getCartCount()" id="angElement">
 	<div><img src="/meancommerce/assets/img/shoping_cart.png" width='24' height='16'>&nbsp;({{cartCount}})</div>
 </section>
 <section data-ng-controller="ProductsController" data-ng-init="findOne()">
@@ -19,10 +19,17 @@
 			</div>
 			<br>
 			<div>  
-				<a class="btn btn-sm btn-primary" ng-click="addToCart(product);">
+				<a class="btn btn-sm btn-primary" ng-click="addToCart(product);" onclick="setTimeout(updateCartCount, 3000);">
 					<span class="ng-scope">Add To Cart</span>
 				</a>
 			</div>
 		</div>
 	</div>
 </section>
+
+<script type="text/javascript">
+	function updateCartCount () {
+		angScope = angular.element(document.getElementById('angElement')).scope();
+		angScope.getCartCount();
+	}
+</script>

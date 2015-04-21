@@ -182,7 +182,7 @@ angular.module('mean.meancommerce').controller('ProductsController', ['$scope', 
     };
 	
 	$scope.getProducts = function() {
-      console.log($http);
+      //console.log($http);
 	  $http.get('/category/products/'+$stateParams.categoryId).success(function(data) {
 		$scope.products = data;
 	 });
@@ -191,14 +191,14 @@ angular.module('mean.meancommerce').controller('ProductsController', ['$scope', 
 	$scope.addToCart = function(product) {
 	  $http.post('/products/userCart',{productInfo:product,quantity:$scope.quantityValue}).success(function(data) {
 		$scope.products = data;
-	 });
+	 });	 
     };
 
 	$scope.getCartCount = function() {
-      console.log($http);
 	  $http.get('/products/userCartCount').success(function(data) {
 		$scope.cartCount = data.length;
 	 });
+	 return $scope.cartCount;
     };
   }
 ]);
