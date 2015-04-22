@@ -24,6 +24,12 @@ Meancommerce.register(function(app, auth, database) {
     menu: 'main'
   });
   Meancommerce.menus.add({
+    title: 'Orders',
+    link: 'all orders',
+    roles: ['admin'],
+    menu: 'main'
+  });
+  Meancommerce.menus.add({
     title: 'Products',
     link: 'all products',
     roles: ['admin'],

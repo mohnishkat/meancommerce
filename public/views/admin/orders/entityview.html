@@ -1,0 +1,13 @@
+<section data-ng-controller="CategoriesController" data-ng-init="entityFindOne(category._id)">
+  <div class="modal-header">
+      <h3 class="modal-title">{{category.name}}</h3>
+  </div>
+  <div class="modal-body">
+    <div>{{category.content}}</div>
+    <span>{{category.created | date:'medium'}}</span> /
+    <span>{{category.user.name}}</span>
+  </div>
+  <div class="modal-footer">
+      <button class="btn btn-warning" ng-click="cancel($event)">Close</button>
+  </div>
+</section>

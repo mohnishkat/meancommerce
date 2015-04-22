@@ -119,5 +119,12 @@ angular.module('mean.meancommerce').config(['$stateProvider',
         url: '/product/:productId',
         templateUrl: 'meancommerce/views/productView.html'
       })
+    .state('all orders', {
+        url: '/admin/orders',
+        templateUrl: 'meancommerce/views/admin/orders/list.html',
+        resolve: {
+          loggedin: checkLoggedin
+        }
+      })
   }
 ]);
