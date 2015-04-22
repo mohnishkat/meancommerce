@@ -188,6 +188,12 @@ angular.module('mean.meancommerce').controller('ProductsController', ['$scope', 
 	 });
     };
 
+  $scope.getProduct = function() {
+   $http.get('/product/'+$stateParams.productId).success(function(data) {
+		$scope.product = data;
+	 });
+  };
+
 	$scope.addToCart = function(product) {
 	  $http.post('/products/userCart',{productInfo:product,quantity:$scope.quantityValue}).success(function(data) {
 		$scope.products = data;
@@ -200,5 +206,16 @@ angular.module('mean.meancommerce').controller('ProductsController', ['$scope', 
 	 });
 	 return $scope.cartCount;
     };
+
+	$scope.getCartDetails = function() {
+		$scope.cartTotal = 0;
+		$http.get('/viewCart').success(function(data) {
+			$scope.cartDetails = data.cartDetails;
+			angular.forEach($scope.cartDetails, function(item) {
+				$scope.cartTotal = $scope.cartTotal + ((item.product.price) * item.quantity);
+			 });
+		});
+		//console.log($scope.cartTotal);
+	};
   }
 ]);

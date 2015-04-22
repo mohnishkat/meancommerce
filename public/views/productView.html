@@ -1,8 +1,8 @@
 <div ng-include src="'meancommerce/views/categoryListing.html'"></div>
 <section data-ng-controller="ProductsController" data-ng-init="getCartCount()" id="angElement">
-	<div><img src="/meancommerce/assets/img/shoping_cart.png" width='24' height='16'>&nbsp;({{cartCount}})</div>
+	<div><a data-ng-href="#!/viewCart"> <img src="/meancommerce/assets/img/shoping_cart.png" width='24' height='16'>&nbsp;({{cartCount}}) </a></div>
 </section>
-<section data-ng-controller="ProductsController" data-ng-init="findOne()">
+<section data-ng-controller="ProductsController" data-ng-init="getProduct()">
 	<h2>{{product.name}}</h2>
 	<div class="row">
 		<div class="col-md-3">

@@ -125,6 +125,10 @@ angular.module('mean.meancommerce').config(['$stateProvider',
         resolve: {
           loggedin: checkLoggedin
         }
+     })
+	  .state('viewCart', {
+        url: '/viewCart',
+        templateUrl: 'meancommerce/views/viewCart.html'
       })
   }
 ]);

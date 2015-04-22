@@ -1,0 +1,23 @@
+<div ng-include src="'meancommerce/views/categoryListing.html'"></div>
+<section data-ng-controller="ProductsController" data-ng-init="getCartCount()" id="angElement">
+	<div><a data-ng-href="#!/viewCart"><img src="/meancommerce/assets/img/shoping_cart.png" width='24' height='16'>&nbsp;({{cartCount}})</a></div>
+</section>
+<div class="row">
+	<div class="col-md-1">&nbsp;</div>
+	<div class="col-md-1">Item</div>
+	<div class="col-md-1">Price</div>
+	<div class="col-md-1">quantity</div>
+	<div class="col-md-1">total</div>
+</div>
+<section data-ng-controller="ProductsController" data-ng-init="getCartDetails()">
+    <div class="row" data-ng-repeat="products in cartDetails">
+		<div class="col-md-1">&nbsp;</div>
+        <div class="col-md-1">
+          <h4><a data-ng-href="#!/product/{{products.product._id}}">{{products.product.name}}</a></h3>          
+        </div>
+		<div class="col-md-1">{{products.product.price}}</div>
+		<div class="col-md-1">{{products.quantity}}</div>
+		<div class="col-md-1">{{(products.quantity)*(products.product.price)}}</div>		
+    </div>
+	<div>{{cartTotal}}</div>
+</section>
