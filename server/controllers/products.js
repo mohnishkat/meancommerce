@@ -170,3 +170,11 @@ exports.userCartCount = function(req, res) {
 		res.json({length:0});
 	}
 };
+
+/**
+ * destroy cart
+ */
+exports.destroyCart = function(req, res) {
+	delete req.session.cart;
+    res.json({length:0});
+};

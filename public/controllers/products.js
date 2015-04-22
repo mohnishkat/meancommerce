@@ -217,5 +217,11 @@ angular.module('mean.meancommerce').controller('ProductsController', ['$scope', 
 		});
 		//console.log($scope.cartTotal);
 	};
+
+    $scope.doPayment = function(cart) {
+        $http.get('/destroyCart').success(function(data) {
+		    $scope.checkoutSuccess = true;
+	    });
+    }
   }
 ]);

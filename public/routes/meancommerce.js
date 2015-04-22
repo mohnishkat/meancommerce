@@ -136,7 +136,10 @@ angular.module('mean.meancommerce').config(['$stateProvider',
      })
     .state('checkout', {
         url: '/checkout',
-        templateUrl: 'meancommerce/views/checkout.html'
+        templateUrl: 'meancommerce/views/checkout.html',
+        resolve: {
+          loggedin: checkLoggedin
+        },
      })
   }
 ]);

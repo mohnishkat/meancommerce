@@ -35,12 +35,11 @@ Meancommerce.register(function(app, auth, database) {
     roles: ['admin'],
     menu: 'main'
   });
-
-	Meancommerce.menus.add({
-		title: 'Browse Categories',
-		link: 'default category',
-		menu: 'main'
-	});
+  Meancommerce.menus.add({
+    title: 'Browse Categories',
+    link: 'default category',
+    menu: 'main'
+  });
 
   Meancommerce.aggregateAsset('css', 'meancommerce.css');
 

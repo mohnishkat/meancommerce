@@ -1,3 +1,79 @@
 <section data-ng-controller="ProductsController" data-ng-init="getCartDetails()">
-<h1>Checkout</h1>
+    <div class="panel-default" ng-show="checkoutSuccess">
+      <div class="row outer">
+        <div class="col-md-8">
+  <h1>your order has been completed successfully</h1>
+  <a data-ng-href="#!/browseByCategories"><button type="button" class="btn btn-default">
+          <span class="glyphicon glyphicon-shopping-cart"></span> Continue Shopping
+        </button></a>
+      </div>
+    </div>
+  </div>
+  <div class="panel-default" ng-hide="checkoutSuccess">
+    <div class="row outer">
+      <div class="col-md-8">
+        <form id="checkout_form" ng-submit="doPayment(cartDetails)" class="form-horizontal" role="form">
+          <label>Payment Method</label>
+          <div>
+              <div class="radio">
+                  <label>
+                     <input type="radio" ng-model="payment_type" name="payment_type" value="cod" required>
+                     COD
+                  </label>
+              </div>
+              <div class="radio">
+                  <label>
+                      <input type="radio" ng-model="payment_type" name="payment_type" value="cc" required>
+                      Credit card
+                  </label>
+              </div>
+          </div>
+          <div class="form-group">
+            <div class="col-md-offset-4 col-md-4">
+              <button type="submit" class="btn btn-success">Pay Now <span class="glyphicon glyphicon-play"></span></button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="col-md-4 text-center">
+      <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Quantity</th>
+              <th class="text-center">Total</th>
+            </tr>
+          </thead>
+          <tbody>
+               <tr data-ng-repeat="products in cartDetails">
+                <td class="col-sm-2 col-md-2">
+              <div class="media">
+                <div class="media-body">
+                  {{products.product.name}}
+                </div>
+              </div></td>
+              <td class="col-sm-1 col-md-1" style="text-align: center">
+              {{products.quantity}}
+              </td>
+              <td class="col-sm-1 col-md-1 text-center"><strong>{{(products.quantity)*(products.product.price)}}</strong></td>
+              </tr>
+              <tr>
+              <td> &nbsp; </td>
+              <td><h5>Subtotal</h5></td>
+              <td class="text-center"><h5><strong>{{cartTotal}}</strong></h5></td>
+            </tr>
+            <tr>
+              <td> &nbsp; </td>
+              <td><h5>Estimated shipping</h5></td>
+              <td class="text-center"><h5><strong>0</strong></h5></td>
+            </tr>
+            <tr>
+              <td> &nbsp; </td>
+              <td><h3>Total</h3></td>
+              <td class="text-center"><h3><strong>{{cartTotal}}</strong></h3></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+  </div>
 </section>
