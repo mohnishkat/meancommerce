@@ -38,7 +38,7 @@ Meancommerce.register(function(app, auth, database) {
 
 	Meancommerce.menus.add({
 		title: 'Browse Categories',
-		link: 'list category',
+		link: 'default category',
 		menu: 'main'
 	});
 

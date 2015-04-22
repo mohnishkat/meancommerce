@@ -181,6 +181,13 @@ angular.module('mean.meancommerce').controller('CategoriesController', ['$scope'
         $scope.categories = data;
       });
      };
+
+	$scope.loadDefaultCategory = function() {
+      $http.get('/categories').success(function(data) {
+		$location.path('category/products/' + data[0]._id);
+      });
+     };
+
     }
 ]).controller('ModalInstanceCtrl', function ($scope, $modalInstance, items) {
 

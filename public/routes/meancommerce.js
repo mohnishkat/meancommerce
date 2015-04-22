@@ -126,9 +126,13 @@ angular.module('mean.meancommerce').config(['$stateProvider',
           loggedin: checkLoggedin
         }
      })
-	  .state('viewCart', {
+	.state('viewCart', {
         url: '/viewCart',
         templateUrl: 'meancommerce/views/viewCart.html'
+      })
+	.state('default category', {
+        url: '/browseByCategories',
+        templateUrl: 'meancommerce/views/defaultCategory.html'
       })
   }
 ]);
