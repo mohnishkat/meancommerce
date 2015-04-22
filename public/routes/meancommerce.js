@@ -119,5 +119,9 @@ angular.module('mean.meancommerce').config(['$stateProvider',
         url: '/product/:productId',
         templateUrl: 'meancommerce/views/productView.html'
       })
+	  .state('viewCart', {
+        url: '/viewCart',
+        templateUrl: 'meancommerce/views/viewCart.html'
+      })
   }
 ]);

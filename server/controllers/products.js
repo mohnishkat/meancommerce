@@ -153,8 +153,8 @@ exports.userCart = function(req, res) {
 	}
 
 	req.session.cart['prod_'+req.body.productInfo._id] = {
-		name:req.body.productInfo.name,
-		quanity:req.body.quantity
+		product:req.body.productInfo,
+		quantity:req.body.quantity
 	}
 
 	res.json(req.session.cart);

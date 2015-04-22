@@ -206,5 +206,16 @@ angular.module('mean.meancommerce').controller('ProductsController', ['$scope', 
 	 });
 	 return $scope.cartCount;
     };
+
+	$scope.getCartDetails = function() {
+		$scope.cartTotal = 0;
+		$http.get('/viewCart').success(function(data) {
+			$scope.cartDetails = data.cartDetails;
+			angular.forEach($scope.cartDetails, function(item) {
+				$scope.cartTotal = $scope.cartTotal + ((item.product.price) * item.quantity);
+			 });
+		});
+		//console.log($scope.cartTotal);
+	};
   }
 ]);
