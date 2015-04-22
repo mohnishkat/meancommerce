@@ -2,22 +2,61 @@
 <section data-ng-controller="ProductsController" data-ng-init="getCartCount()" id="angElement">
 	<div><a data-ng-href="#!/viewCart"><img src="/meancommerce/assets/img/shoping_cart.png" width='24' height='16'>&nbsp;({{cartCount}})</a></div>
 </section>
-<div class="row">
-	<div class="col-md-1">&nbsp;</div>
-	<div class="col-md-1">Item</div>
-	<div class="col-md-1">Price</div>
-	<div class="col-md-1">quantity</div>
-	<div class="col-md-1">total</div>
-</div>
-<section data-ng-controller="ProductsController" data-ng-init="getCartDetails()">
-    <div class="row" data-ng-repeat="products in cartDetails">
-		<div class="col-md-1">&nbsp;</div>
-        <div class="col-md-1">
-          <h4><a data-ng-href="#!/product/{{products.product._id}}">{{products.product.name}}</a></h3>          
-        </div>
-		<div class="col-md-1">{{products.product.price}}</div>
-		<div class="col-md-1">{{products.quantity}}</div>
-		<div class="col-md-1">{{(products.quantity)*(products.product.price)}}</div>		
-    </div>
-	<div>{{cartTotal}}</div>
-</section>
+<table class="table table-hover">
+	<thead>
+		<tr>
+			<th>Product</th>
+			<th>Quantity</th>
+			<th class="text-center">Price</th>
+			<th class="text-center">Total</th>
+		</tr>
+	</thead>
+	<tbody data-ng-controller="ProductsController" data-ng-init="getCartDetails()">
+	     <tr data-ng-repeat="products in cartDetails">
+	     	<td class="col-sm-8 col-md-6">
+			<div class="media">
+				<a class="thumbnail pull-left" href="#"> <img class="media-object" src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/72/product-icon.png" style="width: 72px; height: 72px;"> </a>
+				<div class="media-body">
+					<h4 class="media-heading"><a data-ng-href="#!/product/{{products.product._id}}">{{products.product.name}}</a></h4>
+					<span>Status: </span><span class="text-success"><strong>In Stock</strong></span>
+				</div>
+			</div></td>
+			<td class="col-sm-1 col-md-1" style="text-align: center">
+			{{products.quantity}}
+			</td>
+			<td class="col-sm-1 col-md-1 text-center"><strong>{{products.product.price}}</strong></td>
+			<td class="col-sm-1 col-md-1 text-center"><strong>{{(products.quantity)*(products.product.price)}}</strong></td>
+	    </tr>
+	    <tr>
+			<td> &nbsp; </td>
+			<td> &nbsp; </td>
+			<td><h5>Subtotal</h5></td>
+			<td class="text-center"><h5><strong>{{cartTotal}}</strong></h5></td>
+		</tr>
+		<tr>
+			<td> &nbsp; </td>
+			<td> &nbsp; </td>
+			<td><h5>Estimated shipping</h5></td>
+			<td class="text-center"><h5><strong>0</strong></h5></td>
+		</tr>
+		<tr>
+			<td> &nbsp; </td>
+			<td> &nbsp; </td>
+			<td><h3>Total</h3></td>
+			<td class="text-center"><h3><strong>{{cartTotal}}</strong></h3></td>
+		</tr>
+		<tr>
+			<td> &nbsp; </td>
+			<td> &nbsp; </td>
+			<td>
+			<button type="button" class="btn btn-default">
+				<span class="glyphicon glyphicon-shopping-cart"></span> Continue Shopping
+			</button></td>
+			<td>
+			<button type="button" class="btn btn-success">
+				Checkout <span class="glyphicon glyphicon-play"></span>
+			</button></td>
+		</tr>
+		<div>{{cartTotal}}</div>
+	</tbody>
+</table>
