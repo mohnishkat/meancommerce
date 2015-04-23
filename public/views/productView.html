@@ -1,35 +1,80 @@
 <div ng-include src="'meancommerce/views/categoryListing.html'"></div>
-<section data-ng-controller="ProductsController" data-ng-init="getCartCount()" id="angElement">
-	<div><a data-ng-href="#!/viewCart"> <img src="/meancommerce/assets/img/shoping_cart.png" width='24' height='16'>&nbsp;({{cartCount}}) </a></div>
-</section>
-<section data-ng-controller="ProductsController" data-ng-init="getProduct()">
-	<h2>{{product.name}}</h2>
+<div class="span9" data-ng-controller="ProductsController" data-ng-init="getProduct()">
 	<div class="row">
-		<div class="col-md-3">
-			<div><img src="/meancommerce/assets/img/prod.png"></div>
-		</div>
-		<div class="col-md-3">			
-			<div><B>SKU:</B>{{product.sku}}</div>
-			<div><B>Price:</B>${{product.price}}</div>  
-			<div>{{product.content}}</div>  
-			<div>{{product.user.name}}</div>    
-			<div>
-				<select ng-init="quantityValue=1" ng-model="quantityValue" ng-options="item for item in quantity">
-				</select>
+
+		<div class="product-details clearfix">
+			<div class="product-title">
+				<h2>{{product.name}}</h2>
 			</div>
-			<br>
-			<div>  
-				<a class="btn btn-sm btn-primary" ng-click="addToCart(product);" onclick="setTimeout(updateCartCount, 1000);">
-					<span class="ng-scope">Add To Cart</span>
-				</a>
+			<div class="span4">
+
+				<div class="product-img">
+					<a class="fancybox" href="/meancommerce/assets/img/650x700.jpg"><img src="/meancommerce/assets/img/prod.png" alt=""></a>
+				</div><!--end product-img-->
+				<!-- <div class="product-img-thumb">
+					<a class="fancybox" href="/meancommerce/assets/img/650x700.jpg"><img src="/meancommerce/assets/img/68x60.jpg" alt=""></a>
+					<a class="fancybox" href="/meancommerce/assets/img/650x700.jpg"><img src="/meancommerce/assets/img/68x60.jpg" alt=""></a>
+					<a class="fancybox" href="/meancommerce/assets/img/650x700.jpg"><img src="/meancommerce/assets/img/68x60.jpg" alt=""></a>
+					<a class="fancybox" href="/meancommerce/assets/img/650x700.jpg"><img src="/meancommerce/assets/img/68x60.jpg" alt=""></a>
+				</div><!--product-img-thumb-->
+			</div><!--end span5-->
+
+			<div class="span4">
+				<div class="product-set">
+					
+					<div class="product-info">
+						<dl class="dl-horizontal">
+						  <dt>Availabilty:</dt>
+						  <dd>Available In Stock</dd>
+
+						  <dt>Product Code:</dt>
+						  <dd>{{product.sku}}</dd>
+
+						   <dt>Review Points:</dt>
+						  <dd>25 Points</dd>
+						</dl>
+					</div><!--end product-info-->
+					<div class="product-price clear">
+						<span>Rs.{{product.price}}</span>
+					</div><!--end product-price-->
+					<div class="clear input-append">
+						<select ng-init="quantityValue=1" ng-model="quantityValue" ng-options="item for item in quantity">
+				        </select>
+		                <a class="btn btn-sm btn-primary" ng-click="addToCart(product);" onclick="setTimeout(updateCartCount, 1000);">
+							<span class="ng-scope">Add To Cart</span>
+						</a>
+						
+
+					
+					</div>
+				</div><!--end product-set-->
+			</div><!--end span4-->
+
+		</div><!--end product-details-->
+
+	</div><!--end row-->
+
+
+	<div class="product-tab">
+		<ul class="nav nav-tabs">
+		  <li class="active">
+			<a href="#descraption" data-toggle="tab">Description</a>
+		  </li>
+		 
+		</ul>
+		<div class="tab-content">
+			<div class="tab-pane active" id="descraption">
+				<p>{{product.content}}</p>
 			</div>
-		</div>
-	</div>
-</section>
+		
+		</div><!--end tab-content-->
+	</div><!--end product-tab-->
+</div>
+
 
 <script type="text/javascript">
-	function updateCartCount () {
+   function updateCartCount () {
 		angScope = angular.element(document.getElementById('angElement')).scope();
 		angScope.getCartCount();
-	}
+	} 
 </script>

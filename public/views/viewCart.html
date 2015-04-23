@@ -1,7 +1,4 @@
 <div ng-include src="'meancommerce/views/categoryListing.html'"></div>
-<section data-ng-controller="ProductsController" data-ng-init="getCartCount()" id="angElement">
-	<div><a data-ng-href="#!/viewCart"><img src="/meancommerce/assets/img/shoping_cart.png" width='24' height='16'>&nbsp;({{cartCount}})</a></div>
-</section>
 <table class="table table-hover">
 	<thead>
 		<tr>
@@ -24,26 +21,26 @@
 			<td class="col-sm-1 col-md-1" style="text-align: center">
 			{{products.quantity}}
 			</td>
-			<td class="col-sm-1 col-md-1 text-center"><strong>{{products.product.price}}</strong></td>
-			<td class="col-sm-1 col-md-1 text-center"><strong>{{(products.quantity)*(products.product.price)}}</strong></td>
+			<td class="col-sm-1 col-md-1 text-center"><strong>Rs.{{products.product.price}}</strong></td>
+			<td class="col-sm-1 col-md-1 text-center"><strong>Rs.{{(products.quantity)*(products.product.price)}}</strong></td>
 	    </tr>
 	    <tr>
 			<td> &nbsp; </td>
 			<td> &nbsp; </td>
 			<td><h5>Subtotal</h5></td>
-			<td class="text-center"><h5><strong>{{cartTotal}}</strong></h5></td>
+			<td class="text-center"><h5><strong>Rs.{{cartTotal}}</strong></h5></td>
 		</tr>
 		<tr>
 			<td> &nbsp; </td>
 			<td> &nbsp; </td>
 			<td><h5>Estimated shipping</h5></td>
-			<td class="text-center"><h5><strong>0</strong></h5></td>
+			<td class="text-center"><h5><strong>Rs.0</strong></h5></td>
 		</tr>
 		<tr>
 			<td> &nbsp; </td>
 			<td> &nbsp; </td>
 			<td><h3>Total</h3></td>
-			<td class="text-center"><h3><strong>{{cartTotal}}</strong></h3></td>
+			<td class="text-center"><h3><strong>Rs.{{cartTotal}}</strong></h3></td>
 		</tr>
 		<tr>
 			<td> &nbsp; </td>

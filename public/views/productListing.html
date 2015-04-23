@@ -1,15 +1,27 @@
 <div ng-include src="'meancommerce/views/categoryListing.html'"></div>
-<section data-ng-controller="ProductsController" data-ng-init="getProducts()">
-  <div data-ng-show="products.length">  
-    <div class="row">
-        <div class="col-md-4" data-ng-repeat="product in products">
-          <h3><a data-ng-href="#!/product/{{product._id}}">{{product.name}}</a></h3>
-          <div><img src="/meancommerce/assets/img/prod.png"></div>
-          <div>{{product.content}}</div>
-          <div>${{product.price}}</div>
-        </div>		
-    </div>
-  </div>
-  <h1 data-ng-hide="!products || products.length">No product found.</h1>
-</section>
+<div class="row">
+	<ul class="hProductItems clearfix" data-ng-controller="ProductsController" data-ng-init="getProducts()">
+		<li class="span3 clearfix" data-ng-repeat="product in products">
+			<div class="thumbnail">
+				<a href=""><img src="/meancommerce/assets/img/prod.png" alt=""></a>
+			</div>
+			<div class="thumbSetting">
+				<div class="thumbTitle">
+					<h3>
+					<a href="#!/product/{{product._id}}" class="invarseColor">{{product.name}}</a>
+					</h3>
+				</div>
+				<div class="thumbPrice">
+					<span>Rs.{{product.price}}</span>
+				</div>
+
+				<div class="thumbButtons">
+					<a class="btn btn-primary btn-small" role="button" data-ng-href="#!/product/{{product._id}}">
+						View Details
+					</a>
+				</div>
+			</div>
+		</li>
+	</ul>
+</div>
     
