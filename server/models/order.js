@@ -21,27 +21,26 @@ var OrderSchema = new Schema({
     type: Schema.ObjectId,
     ref: 'User'
   },
-  orderStatus: {
+  order_status: {
     type: String,
     required: true,
     trim: true
   },
-  paymenetStatus: {
+  paymenet_status: {
     type: String,
     required: true,
     trim: true
   },
-  paymentMethod: {
+  payment_method: {
     type: String,
     required: true,
     trim: true
   },
   comments: {
     type: String,
-    required: true,
     trim: true
   },
-  shippingMethod: {
+  shipping_method: {
     type: String,
     required: true,
     trim: true
@@ -51,7 +50,7 @@ var OrderSchema = new Schema({
     required: true,
     trim: true
   },
-  shippingPrice: {
+  shipping_price: {
     type: String,
     required: true,
     trim: true
@@ -61,11 +60,16 @@ var OrderSchema = new Schema({
     required: true,
     trim: true
   },
-  grandTotal: {
+  grand_total: {
     type: String,
     required: true,
     trim: true
-  }
+  },
+  product_info: [{
+    id : String,
+    price : Number,
+    quantity: Number
+  }]
 });
 
 

@@ -3,22 +3,22 @@
 angular.module('mean.meancommerce').controller('OrdersController', ['$scope', '$http', '$stateParams', '$location', '$modal', 'Global', 'Orders',
   function($scope, $http, $stateParams, $location, $modal, Global, Orders) {
     $scope.global = Global;
-    $scope.hasAuthorization = function(category) {
-      if (!category || !category.user) return false;
-      return $scope.global.isAdmin || category.user._id === $scope.global.user._id;
+    $scope.hasAuthorization = function(order) {
+      if (!order || !order.user) return false;
+      return $scope.global.isAdmin || order.user._id === $scope.global.user._id;
     };
 	$scope.orderStatus=['processing','completed','on-hold','cancelled'];
     $scope.create = function(isValid) {
       if (isValid) {
-        var category = new Orders({
+        var order = new Orders({
           name: this.name,
           slug: this.slug,
           content: this.content
         });
-        category.$save(function(response) {
+        order.$save(function(response) {
           $location.path('admin/Orders/' + response._id);
         }, function(error) {
-           $scope.categoryError = error.data;
+           $scope.orderError = error.data;
         });
         /*this.title = '';
         this.content = '';
@@ -28,18 +28,18 @@ angular.module('mean.meancommerce').controller('OrdersController', ['$scope', '$
       }
     };
 
-    $scope.remove = function(category) {
-      if (category) {
-        category.$remove(function(response) {
+    $scope.remove = function(order) {
+      if (order) {
+        order.$remove(function(response) {
           for (var i in $scope.Orders) {
-            if ($scope.Orders[i] === category) {
+            if ($scope.Orders[i] === order) {
 	      $scope.Orders.splice(i,1);
             }
           }
           $location.path('admin/Orders');
         });
       } else {
-        $scope.category.$remove(function(response) {
+        $scope.order.$remove(function(response) {
           $location.path('admin/Orders');
         });
       }
@@ -47,16 +47,16 @@ angular.module('mean.meancommerce').controller('OrdersController', ['$scope', '$
 
     $scope.update = function(isValid) {
       if (isValid) {
-        var category = $scope.category;
-        if(!category.updated) {
-          category.updated = [];
+        var order = $scope.order;
+        if(!order.updated) {
+          order.updated = [];
         }
-        category.updated.push(new Date().getTime());
+        order.updated.push(new Date().getTime());
 
-        category.$update(function() {
-          $location.path('admin/Orders/' + category._id);
+        order.$update(function() {
+          $location.path('admin/Orders/' + order._id);
         }, function(error) {
-           $scope.categoryError = error.data;
+           $scope.orderError = error.data;
         });
       } else {
         $scope.submitted = true;
@@ -71,9 +71,9 @@ angular.module('mean.meancommerce').controller('OrdersController', ['$scope', '$
 
     $scope.findOne = function() {
       Orders.get({
-        categoryId: $stateParams.categoryId
-      }, function(category) {
-        $scope.category = category;
+        orderId: $stateParams.orderId
+      }, function(order) {
+        $scope.order = order;
       });
     };
 
@@ -90,23 +90,23 @@ angular.module('mean.meancommerce').controller('OrdersController', ['$scope', '$
         });
       }
       if (isValid) {
-        var category = new Orders({
+        var order = new Orders({
           name: this.name,
           slug: this.slug,
           content: this.content
         });
-        category.$save(function(response) {
+        order.$save(function(response) {
           Orders.get({
-            categoryId: response._id
-          }, function(category) {
-            angular.element(document.getElementById('entity-list')).scope().Orders.unshift(category);
+            orderId: response._id
+          }, function(order) {
+            angular.element(document.getElementById('entity-list')).scope().Orders.unshift(order);
           });
-          $scope.categoryError = [{"param":"submit","msg":"Category has been Created"}];
+          $scope.orderError = [{"param":"submit","msg":"Category has been Created"}];
           $scope.name = '';
           $scope.content = '';
           $scope.slug = '';
         }, function(error) {
-           $scope.categoryError = error.data;
+           $scope.orderError = error.data;
         });
       } else {
         $scope.submitted = true;
@@ -120,20 +120,20 @@ angular.module('mean.meancommerce').controller('OrdersController', ['$scope', '$
           controller: 'ModalInstanceCtrl',
           resolve: {
             items: function () {
-              return category;
+              return order;
             }
           }
         });
       }
       if (isValid) {
-        var category = $scope.category;
-        if(!category.updated) {
-          category.updated = [];
+        var order = $scope.order;
+        if(!order.updated) {
+          order.updated = [];
         }
-        category.updated.push(new Date().getTime());
+        order.updated.push(new Date().getTime());
 
-        category.$update(function(response) {
-          $scope.categoryError = [{"param":"submit","msg":"Category has been updated"}];
+        order.$update(function(response) {
+          $scope.orderError = [{"param":"submit","msg":"Category has been updated"}];
           var Orders = angular.element(document.getElementById('entity-list')).scope().Orders;
            angular.forEach(Orders, function(value, key) {
             if(value._id == response._id){
@@ -141,7 +141,7 @@ angular.module('mean.meancommerce').controller('OrdersController', ['$scope', '$
             }
           });
         }, function(error) {
-           $scope.categoryError = error.data;
+           $scope.orderError = error.data;
         });
       } else {
         $scope.submitted = true;
@@ -150,41 +150,41 @@ angular.module('mean.meancommerce').controller('OrdersController', ['$scope', '$
 
     $scope.entityUpdateClose = function() {
       $scope.entity_update = false;
-      $scope.category = '';
+      $scope.order = '';
 
-      $scope.categoryError = '';
+      $scope.orderError = '';
     };
     
-    $scope.entityFindOne = function(categoryId) {
+    $scope.entityFindOne = function(orderId) {
       Orders.get({
-        categoryId: categoryId
-      }, function(category) {
-        $scope.category = category;
+        orderId: orderId
+      }, function(order) {
+        $scope.order = order;
       });
     };
     
-    $scope.open = function ($event, category) {
+    $scope.open = function ($event, order) {
       $event.preventDefault();
       var modalInstance = $modal.open({
-        templateUrl: 'meancommerce/views/admin/Orders/entityview.html',
+        templateUrl: 'meancommerce/views/admin/orders/entityview.html',
         controller: 'ModalInstanceCtrl',
         resolve: {
           items: function () {
-            return category;
+            return order;
           }
         }
       });
     };
 
     $scope.entityFindAll = function() {
-      $http.get('/Orders').success(function(data) {
+      $http.get('/orders').success(function(data) {
         $scope.Orders = data;
       });
      };
     }
 ]).controller('ModalInstanceCtrl', function ($scope, $modalInstance, items) {
 
-  $scope.category = items;
+  $scope.order = items;
 
 
   $scope.ok = function () {

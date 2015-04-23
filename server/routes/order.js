@@ -15,7 +15,7 @@ module.exports = function(Meancommerce, app, auth, database) {
 
   app.route('/admin/orders')
     .get(auth.requiresAdmin, orders.all)
-    .post(auth.requiresAdmin, orders.create);
+    .post(orders.create);
   app.route('/admin/orders/:orderId')
     .get(auth.requiresAdmin, orders.show)
     .put(auth.requiresAdmin, auth.requiresAdmin, hasAuthorization, orders.update)

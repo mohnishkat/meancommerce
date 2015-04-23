@@ -1,20 +1,10 @@
 <section id="entity-list"  data-ng-controller="OrdersController" data-ng-init="find()">
   <div id="list">
-    <button data-ng-show="orders.length" class="btn btn-default" data-ng-click="entityCreate(false, true);">+ New order</button></a>
     <ul class="orders unstyled">
       <li data-ng-repeat="order in orders">
         <h2>
           <a data-ng-href="#!/admin/orders/{{order._id}}" ng-click="open($event, order)">{{order._id}}</a>
-          <span data-ng-if="hasAuthorization(order)">
-            <a class="btn" data-ng-click="entityUpdate(false, order);">
-              <i class="glyphicon glyphicon-edit"></i>
-            </a>
-            <a class="btn" data-ng-click="remove(order);">
-              <i class="glyphicon glyphicon-trash"></i>
-            </a>
-          </span>
         </h2>
-        <div>{{order.content}}</div>
         <span>{{order.created | date:'medium'}}</span> /
         <span>{{order.user.name}}</span>
       </li>

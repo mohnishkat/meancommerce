@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('mean.meancommerce').controller('ProductsController', ['$scope', '$http', '$stateParams', '$location', 'Global', 'Products',
-  function($scope, $http, $stateParams, $location, Global, Products) {
+angular.module('mean.meancommerce').controller('ProductsController', ['$scope', '$http', '$stateParams', '$location', 'Global', 'Products', 'Orders',
+  function($scope, $http, $stateParams, $location, Global, Products, Orders) {
     $scope.global = Global;
     $scope.hasAuthorization = function(product) {
       if (!product || !product.user) return false;
@@ -219,10 +219,32 @@ angular.module('mean.meancommerce').controller('ProductsController', ['$scope', 
 	};
 
   $scope.doPayment = function(cart) {
-    $http.get('/destroyCart').success(function(data) {
-      $scope.checkoutSuccess = true;
+    var order_products = [];
+    angular.forEach(this.cartDetails, function(products, pkey) {
+      //console.log(products);
+      var product_info = { 'id': products.product._id, 'price': products.product.price, 'quantity':products.quantity};
+      order_products.push(product_info);
     });
-   //console.log(this);
+    console.log(order_products);
+    var order = new Orders({
+      order_status: 'Pending',
+      paymenet_status: 'Completed',
+      payment_method: this.payment_type,
+      shipping_method: 'Default',
+      shipping_price: 0,
+      tax: 0,
+      total: this.cartTotal,
+      grand_total: this.cartTotal,
+      product_info: order_products,
+    });
+    order.$save(function(response) {
+      $http.get('/destroyCart').success(function(data) {
+        $scope.checkoutSuccess = true;
+      });
+    }, function(error) {
+       $scope.orderError = error.data;
+    });
+    //console.log(this);
   };
   
   }
