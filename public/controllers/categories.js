@@ -81,7 +81,7 @@ angular.module('mean.meancommerce').controller('CategoriesController', ['$scope'
       if(first) {
         var modalInstance = $modal.open({
         templateUrl: 'meancommerce/views/admin/categories/entitycreate.html',
-        controller: 'ModalInstanceCtrl',
+        controller: 'CategoriesModalInstanceCtrl',
         resolve: {
           items: function () {
             return 1;
@@ -117,7 +117,7 @@ angular.module('mean.meancommerce').controller('CategoriesController', ['$scope'
       if (category) {
         var modalInstance = $modal.open({
           templateUrl: 'meancommerce/views/admin/categories/entityedit.html',
-          controller: 'ModalInstanceCtrl',
+          controller: 'CategoriesModalInstanceCtrl',
           resolve: {
             items: function () {
               return category;
@@ -156,6 +156,7 @@ angular.module('mean.meancommerce').controller('CategoriesController', ['$scope'
     };
     
     $scope.entityFindOne = function(categoryId) {
+      console.log(categoryId);
       Categories.get({
         categoryId: categoryId
       }, function(category) {
@@ -167,7 +168,7 @@ angular.module('mean.meancommerce').controller('CategoriesController', ['$scope'
       $event.preventDefault();
       var modalInstance = $modal.open({
         templateUrl: 'meancommerce/views/admin/categories/entityview.html',
-        controller: 'ModalInstanceCtrl',
+        controller: 'CategoriesModalInstanceCtrl',
         resolve: {
           items: function () {
             return category;
@@ -189,10 +190,9 @@ angular.module('mean.meancommerce').controller('CategoriesController', ['$scope'
      };
 
     }
-]).controller('ModalInstanceCtrl', function ($scope, $modalInstance, items) {
+]).controller('CategoriesModalInstanceCtrl', function ($scope, $modalInstance, items) {
 
   $scope.category = items;
-
 
   $scope.ok = function () {
     $modalInstance.close();
